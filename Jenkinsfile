@@ -42,6 +42,9 @@ pipeline {
                     GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
                     SHORT_COMMIT = "${GIT_COMMIT_HASH[0..7]}"
                     docker.withRegistry('https://index.docker.io/r/kasunvithanage/spinnaker_docker_repo', 'dockerHubCredentials') {
+                        echo '=== taging the Docker Image ==='
+                        sh 'docker tag spinnaker_docker_repo kasunvithanage/spinnaker_docker_repo:spinnaker_docker_repo'
+                        echo '=== tagging success Docker Image ==='
                         app.push("$SHORT_COMMIT")
                         app.push("latest")
                     }
