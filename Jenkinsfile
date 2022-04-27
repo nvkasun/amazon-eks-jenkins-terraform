@@ -51,12 +51,12 @@ pipeline {
                 }
             }
         }
-        stage('Remove local images') {
-            steps {
-                echo '=== Delete the local docker images ==='
-                sh("docker rmi -f kasunvithanage/spinnaker_docker_repo:latest || :")
-                sh("docker rmi -f kasunvithanage/spinnaker_docker_repo:$SHORT_COMMIT || :")
-            }
+#        stage('Remove local images') {
+#            steps {
+#                echo '=== Delete the local docker images ==='
+#                sh("docker rmi -f kasunvithanage/spinnaker_docker_repo:latest || :")
+#                sh("docker rmi -f kasunvithanage/spinnaker_docker_repo:$SHORT_COMMIT || :")
+#            }
         }
     }
 }
