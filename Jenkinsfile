@@ -26,7 +26,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                echo '=== Building Petclinic Docker Image ==='
+                echo '===Building Petclinic Docker Image==='
                 script {
                     app = docker.build("kasunvithanage/spinnaker_docker_repo")
                 }
