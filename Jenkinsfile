@@ -26,9 +26,9 @@ pipeline {
                 branch 'master'
             }
             steps {
-                echo '===Building Petclinic Docker Image==='
+                echo '=== Building Petclinic Docker Image ==='
                 script {
-                    app = docker.build("kasunvithanage/spinnaker_docker_repo")
+                    app = docker.build("ibuchh/petclinic-spinnaker-jenkins")
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
                 script {
                     GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
                     SHORT_COMMIT = "${GIT_COMMIT_HASH[0..7]}"
-                    docker.withRegistry('https://index.docker.io/r/kasunvithanage/spinnaker_docker_repo', 'dockerHubCredentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredentials') {
                         app.push("$SHORT_COMMIT")
                         app.push("latest")
                     }
@@ -51,8 +51,8 @@ pipeline {
         stage('Remove local images') {
             steps {
                 echo '=== Delete the local docker images ==='
-                sh("docker rmi -f kasunvithanage/spinnaker_docker_repo:latest || :")
-                sh("docker rmi -f kasunvithanage/spinnaker_docker_repo:$SHORT_COMMIT || :")
+                sh("docker rmi -f ibuchh/petclinic-spinnaker-jenkins:latest || :")
+                sh("docker rmi -f ibuchh/petclinic-spinnaker-jenkins:$SHORT_COMMIT || :")
             }
         }
     }
